@@ -9,7 +9,7 @@ services:
       - ./data:/var/lib/tuwunel
       - ./tuwunel.toml:/var/lib/tuwunel/tuwunel.toml
     environment:
-      - TUWUNEL_CONFIG="/var/lib/tuwunel/tuwunel.toml"
+      - TUWUNEL_CONFIG=/var/lib/tuwunel/tuwunel.toml
       - TUWUNEL_SERVER_NAME="matrix.${DOMAIN}"
       - TUWUNEL_PORT="${TUWUNEL_PORT}"
 
