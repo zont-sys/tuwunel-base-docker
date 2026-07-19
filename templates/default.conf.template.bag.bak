@@ -15,12 +15,12 @@ server {
     listen 80;
     server_name element.${DOMAIN};
 
-    #gzip on;
-    #gzip_vary on;
-    #gzip_min_length 4096;
-    #gzip_comp_level 4;
-    #gzip_proxied any;
-    #gzip_types application/javascript; 
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 4096;
+    gzip_comp_level 4;
+    gzip_proxied any;
+    gzip_types application/javascript; 
     
     location / {
         proxy_pass http://element-web:80;
