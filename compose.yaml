@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  tuwunel:
+    image: ghcr.io/matrix-construct/tuwunel:latest
+    container_name: tuwunel
+    restart: unless-stopped
+    volumes:
+      - ./data:/var/lib/tuwunel
+      - ./tuwunel.toml:/var/lib/tuwunel/tuwunel.toml
+    environment:
+      - TUWUNEL_CONFIG="/var/lib/tuwunel/tuwunel.toml"
+      - TUWUNEL_SERVER_NAME="matrix.${DOMAIN}"
+      - TUWUNEL_PORT="${TUWUNEL_PORT}"
+
+  element:
+    image: vectorim/element-web:latest
+    container_name: element-web
+    restart: unless-stopped
+    volumes:
+      - ./element-config.json:/app/config.json
+
+  proxy:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+      # - "8448:8448"
+    environment:
+      - DOMAIN=${DOMAIN}
+      - TUWUNEL_PORT=${TUWUNEL_PORT}
+    volumes:
+      - ./templates:/etc/nginx/templates:ro
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - element
+      - tuwunel
+    restart: always
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+    command: certonly --standalone -d element.${DOMAIN} -d matrix.${DOMAIN} --email ${EMAIL} --agree-tos --no-eff-email
+
+volumes:
+  nginx_data:
