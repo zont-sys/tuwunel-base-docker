@@ -657,7 +657,7 @@ allow_registration = true
 # reloadable: yes
 # example: "o&^uCtes4HPf0Vu@F20jQeeWE7"
 #
-registration_token = "-qRYP/8s3fbBX}=0/s[yAzy.(!GTgBMpP=Qq)ml@P="
+registration_token = "-qRYP/8s3fbBX}=0/s[yAzy.(!GTgBMpP=Qq)ml@P=001"
 
 # Path to a file on the system that gets read for additional registration
 # tokens. Multiple tokens can be added if you separate them with
